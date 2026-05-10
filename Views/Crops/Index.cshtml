@@ -1,0 +1,66 @@
+@model IEnumerable<Crop>
+@{
+    ViewData["Title"] = "Crops";
+}
+
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Crops</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i> Add New Crop</a>
+</div>
+
+<div class="card shadow-sm border-0 w-75">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th width="15%">ID</th>
+                        <th width="45%">Crop Name</th>
+                        <th width="20%">Batches</th>
+                        <th width="20%" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model ?? new List<Crop>())
+                    {
+                        <tr>
+                            <td>@item.CropID</td>
+                            <td class="fw-bold text-success">@item.CropName</td>
+                            <td><span class="badge bg-secondary rounded-pill">@item.BatchCount batches</span></td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.CropID" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                                <button type="button" class="btn btn-sm btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.CropID">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade text-start" id="deleteModal-@item.CropID" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete crop <strong>@item.CropName</strong>?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form asp-action="Delete" asp-route-id="@item.CropID" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if(!Model.Any()) {
+                        <tr><td colspan="4" class="text-center">No crops found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

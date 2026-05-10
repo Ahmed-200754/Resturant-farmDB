@@ -1,0 +1,58 @@
+@model Farm
+@{
+    ViewData["Title"] = "Edit Farm";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Edit Farm</h1>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="FarmID" />
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="FarmName" class="form-label fw-bold"></label>
+                    <input asp-for="FarmName" class="form-control" />
+                    <span asp-validation-for="FarmName" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="FarmerName" class="form-label fw-bold"></label>
+                    <input asp-for="FarmerName" class="form-control" />
+                    <span asp-validation-for="FarmerName" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="FarmerPhone" class="form-label fw-bold"></label>
+                    <input asp-for="FarmerPhone" class="form-control" />
+                    <span asp-validation-for="FarmerPhone" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-3">
+                    <label asp-for="Latitude" class="form-label fw-bold"></label>
+                    <input asp-for="Latitude" class="form-control" type="number" step="0.000001" />
+                    <span asp-validation-for="Latitude" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-3">
+                    <label asp-for="Longitude" class="form-label fw-bold"></label>
+                    <input asp-for="Longitude" class="form-control" type="number" step="0.000001" />
+                    <span asp-validation-for="Longitude" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Changes</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

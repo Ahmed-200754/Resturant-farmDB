@@ -1,0 +1,124 @@
+@model IEnumerable<HarvestBatch>
+@{
+    ViewData["Title"] = "Harvest Batches";
+}
+
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Harvest Batches</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i> Add New Batch</a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6 col-lg-4">
+                <input type="text" id="batchSearch" class="form-control" placeholder="Search by crop or farm...">
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <select id="statusFilter" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="Fresh">Fresh</option>
+                    <option value="Expiring Soon">Expiring Soon</option>
+                    <option value="Expired">Expired</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle" id="batchesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Crop</th>
+                        <th>Farm</th>
+                        <th>Harvest Date</th>
+                        <th>Quantity</th>
+                        <th>Freshness Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model ?? new List<HarvestBatch>())
+                    {
+                        var daysLeft = (item.FreshnessWindow - DateTime.Today).Days;
+                        string statusClass = "";
+                        string statusText = "";
+                        
+                        if (daysLeft < 0) {
+                            statusClass = "bg-danger";
+                            statusText = "Expired";
+                        } else if (daysLeft <= 7) {
+                            statusClass = "bg-warning text-dark";
+                            statusText = "Expiring Soon";
+                        } else {
+                            statusClass = "bg-success";
+                            statusText = "Fresh";
+                        }
+                        
+                        <tr>
+                            <td>#@item.BatchID</td>
+                            <td class="fw-bold">@item.CropName</td>
+                            <td>@item.FarmName</td>
+                            <td>@item.HarvestDate.ToShortDateString()</td>
+                            <td>@item.Quantity</td>
+                            <td>
+                                <span class="badge @statusClass rounded-pill" data-status="@statusText">@statusText (@item.FreshnessWindow.ToShortDateString())</span>
+                            </td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.BatchID" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                                <button type="button" class="btn btn-sm btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.BatchID">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade text-start" id="deleteModal-@item.BatchID" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete Batch <strong>#@item.BatchID</strong>?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form asp-action="Delete" asp-route-id="@item.BatchID" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if(!Model.Any()) {
+                        <tr><td colspan="7" class="text-center">No batches found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            function filterTable() {
+                var searchText = $("#batchSearch").val().toLowerCase();
+                var statusText = $("#statusFilter").val();
+                
+                $("#batchesTable tbody tr").filter(function() {
+                    var rowText = $(this).text().toLowerCase();
+                    var rowStatus = $(this).find('.badge').attr('data-status');
+                    var matchSearch = rowText.indexOf(searchText) > -1;
+                    var matchStatus = statusText === "" || rowStatus === statusText;
+                    $(this).toggle(matchSearch && matchStatus);
+                });
+            }
+            
+            $("#batchSearch").on("keyup", filterTable);
+            $("#statusFilter").on("change", filterTable);
+        });
+    </script>
+}

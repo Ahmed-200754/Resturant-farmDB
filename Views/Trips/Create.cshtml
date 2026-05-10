@@ -1,0 +1,64 @@
+@model TripToRestaurant
+@{
+    ViewData["Title"] = "Log Trip";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Log New Trip</h1>
+</div>
+
+<div class="card shadow-sm border-0 w-75">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="DriverID" class="form-label fw-bold"></label>
+                    <select asp-for="DriverID" class="form-select" asp-items="ViewBag.Drivers">
+                        <option value="">-- Select Driver --</option>
+                    </select>
+                    <span asp-validation-for="DriverID" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="FarmID" class="form-label fw-bold"></label>
+                    <select asp-for="FarmID" class="form-select" asp-items="ViewBag.Farms">
+                        <option value="">-- Select Origin Farm --</option>
+                    </select>
+                    <span asp-validation-for="FarmID" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label asp-for="TripDate" class="form-label fw-bold"></label>
+                    <input asp-for="TripDate" class="form-control" type="date" />
+                    <span asp-validation-for="TripDate" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label asp-for="Distance" class="form-label fw-bold"></label>
+                    <div class="input-group">
+                        <input asp-for="Distance" class="form-control" type="number" />
+                        <span class="input-group-text">km</span>
+                    </div>
+                    <span asp-validation-for="Distance" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-12">
+                    <label asp-for="RouteTaken" class="form-label fw-bold"></label>
+                    <input asp-for="RouteTaken" class="form-control" placeholder="e.g. Highway 1 -> Main St" />
+                    <span asp-validation-for="RouteTaken" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Trip</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

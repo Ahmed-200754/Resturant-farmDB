@@ -1,0 +1,61 @@
+@model HarvestBatch
+@{
+    ViewData["Title"] = "Create Batch";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Add New Harvest Batch</h1>
+</div>
+
+<div class="card shadow-sm border-0 w-75">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="FarmID" class="form-label fw-bold"></label>
+                    <select asp-for="FarmID" class="form-select" asp-items="ViewBag.Farms">
+                        <option value="">-- Select Farm --</option>
+                    </select>
+                    <span asp-validation-for="FarmID" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="CropID" class="form-label fw-bold"></label>
+                    <select asp-for="CropID" class="form-select" asp-items="ViewBag.Crops">
+                        <option value="">-- Select Crop --</option>
+                    </select>
+                    <span asp-validation-for="CropID" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label asp-for="Quantity" class="form-label fw-bold"></label>
+                    <input asp-for="Quantity" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label asp-for="HarvestDate" class="form-label fw-bold"></label>
+                    <input asp-for="HarvestDate" class="form-control" type="date" />
+                    <span asp-validation-for="HarvestDate" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label asp-for="FreshnessWindow" class="form-label fw-bold"></label>
+                    <input asp-for="FreshnessWindow" class="form-control" type="date" />
+                    <span asp-validation-for="FreshnessWindow" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Batch</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

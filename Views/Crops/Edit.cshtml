@@ -1,0 +1,32 @@
+@model Crop
+@{
+    ViewData["Title"] = "Edit Crop";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Edit Crop</h1>
+</div>
+
+<div class="card shadow-sm border-0 w-50">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="CropID" />
+            
+            <div class="mb-3">
+                <label asp-for="CropName" class="form-label fw-bold"></label>
+                <input asp-for="CropName" class="form-control" />
+                <span asp-validation-for="CropName" class="text-danger"></span>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Changes</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

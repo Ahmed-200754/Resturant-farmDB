@@ -1,0 +1,70 @@
+@model IEnumerable<Driver>
+@{
+    ViewData["Title"] = "Drivers";
+}
+
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Drivers</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i> Add New Driver</a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Driver Name</th>
+                        <th>Phone</th>
+                        <th>Date of Birth</th>
+                        <th>Age</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model ?? new List<Driver>())
+                    {
+                        <tr>
+                            <td>@item.DriverID</td>
+                            <td class="fw-bold">@item.DriverName</td>
+                            <td><a href="tel:@item.DriverPhone" class="text-decoration-none"><i class="bi bi-telephone-fill small me-1"></i> @item.DriverPhone</a></td>
+                            <td>@item.DriverDOB.ToShortDateString()</td>
+                            <td><span class="badge bg-secondary rounded-pill">@item.Age yrs</span></td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.DriverID" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                                <button type="button" class="btn btn-sm btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.DriverID">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade text-start" id="deleteModal-@item.DriverID" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete Driver <strong>@item.DriverName</strong>?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form asp-action="Delete" asp-route-id="@item.DriverID" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if(!Model.Any()) {
+                        <tr><td colspan="6" class="text-center">No drivers found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

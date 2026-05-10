@@ -1,0 +1,97 @@
+<nav id="sidebarMenu" class="sidebar collapse d-md-block d-flex flex-column justify-content-between pt-4 pb-4">
+    <div>
+        <ul class="nav flex-column gap-1 px-3">
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active-link" : "")" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-grid me-3 fs-5 align-middle"></i> Dashboard
+                </a>
+            </li>
+            
+            <li class="nav-item mt-3 mb-1 px-3">
+                <small class="text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.1em;">Inventory</small>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Crops" ? "active-link" : "")" asp-controller="Crops" asp-action="Index">
+                    <i class="bi bi-flower1 me-3 fs-5 align-middle"></i> Crop Varieties
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "HarvestBatches" ? "active-link" : "")" asp-controller="HarvestBatches" asp-action="Index">
+                    <i class="bi bi-box-seam me-3 fs-5 align-middle"></i> Active Batches
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 mb-1 px-3">
+                <small class="text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.1em;">Logistics</small>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Farms" ? "active-link" : "")" asp-controller="Farms" asp-action="Index">
+                    <i class="bi bi-house-door me-3 fs-5 align-middle"></i> Origin Farms
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Restaurants" ? "active-link" : "")" asp-controller="Restaurants" asp-action="Index">
+                    <i class="bi bi-shop me-3 fs-5 align-middle"></i> Destinations
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Orders" ? "active-link" : "")" asp-controller="Orders" asp-action="Index">
+                    <i class="bi bi-receipt me-3 fs-5 align-middle"></i> Order Manifests
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 mb-1 px-3">
+                <small class="text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.1em;">Fleet</small>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Drivers" ? "active-link" : "")" asp-controller="Drivers" asp-action="Index">
+                    <i class="bi bi-person-vcard me-3 fs-5 align-middle"></i> Drivers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Trips" ? "active-link" : "")" asp-controller="Trips" asp-action="Index">
+                    <i class="bi bi-truck me-3 fs-5 align-middle"></i> Active Routes
+                </a>
+            </li>
+
+            <li class="nav-item mt-3 mb-1 px-3">
+                <small class="text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.1em;">Intelligence</small>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "active-link" : "")" asp-controller="Reports" asp-action="Index">
+                    <i class="bi bi-bar-chart-fill me-3 fs-5 align-middle"></i> Analytics Suite
+                </a>
+            </li>
+            
+            <li class="nav-item mt-3 mb-1 px-3">
+                <small class="text-uppercase text-muted fw-bold" style="font-size: 0.65rem; letter-spacing: 0.1em;">Testing</small>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded text-warning @(ViewContext.RouteData.Values["Controller"]?.ToString() == "TaskRequirements" ? "active-link text-warning" : "")" asp-controller="TaskRequirements" asp-action="Index">
+                    <i class="bi bi-shield-check me-3 fs-5 align-middle"></i> Task Requirements
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="px-3 mt-5">
+        <a asp-controller="Orders" asp-action="Create" class="btn btn-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2">
+            <i class="bi bi-plus-lg fs-5"></i> New Manifest
+        </a>
+        
+        <hr class="border-secondary my-4">
+        
+        <ul class="nav flex-column gap-1">
+            <li class="nav-item">
+                <a class="nav-link rounded" href="#">
+                    <i class="bi bi-question-circle me-3 fs-5 align-middle"></i> Support
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link rounded" href="#">
+                    <i class="bi bi-person-circle me-3 fs-5 align-middle"></i> Account
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

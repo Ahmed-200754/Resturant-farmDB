@@ -1,0 +1,148 @@
+@{
+    ViewData["Title"] = "Task Requirements Playground";
+}
+
+<div class="d-flex justify-content-between align-items-end pt-2 pb-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1" style="font-family: 'Inter', sans-serif;">Task Requirements Playground</h1>
+        <p class="text-muted mb-0">Explicit SQL Operations Demo via ADO.NET</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100 p-4 border-0" style="background-color: var(--agri-surface);">
+            <h5 class="text-white mb-3">1. INSERT Statements</h5>
+            <p class="text-muted small mb-4">Inserts a Farm, Restaurant, and HarvestBatch manually using ADO.NET.</p>
+            <form asp-action="RunInserts" method="post" class="mt-auto">
+                <button type="submit" class="btn btn-primary w-100 fw-bold">Execute Inserts</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4 border-0" style="background-color: var(--agri-surface);">
+            <h5 class="text-white mb-3">2. DELETE Statements</h5>
+            <p class="text-muted small mb-4">Deletes a Farm, Restaurant, and Driver (with safety WHERE clause).</p>
+            <form asp-action="RunDeletes" method="post" class="mt-auto">
+                <button type="submit" class="btn btn-outline-danger border-secondary text-danger w-100 fw-bold">Execute Deletes</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 p-4 border-0" style="background-color: var(--agri-surface);">
+            <h5 class="text-white mb-3">3. UPDATE Statements</h5>
+            <p class="text-muted small mb-4">Updates Farm Phone, Restaurant Window, and Batch Quantity with WHERE clauses.</p>
+            <form asp-action="RunUpdates" method="post" class="mt-auto">
+                <button type="submit" class="btn btn-outline-warning border-secondary text-warning w-100 fw-bold">Execute Updates</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-white mb-3 mt-4">4. Simple Select Queries</h4>
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card border-0" style="background-color: var(--agri-surface);">
+            <div class="card-header border-0 pb-0 pt-3"><h6 class="text-white">All Farms (@ViewBag.Farms?.Count)</h6></div>
+            <div class="card-body px-3 py-2" style="max-height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush">
+                    @foreach(var item in ViewBag.Farms ?? new List<FarmToTable.Models.Farm>()) { <li class="list-group-item bg-transparent text-muted px-0 py-1">@item.FarmName</li> }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0" style="background-color: var(--agri-surface);">
+            <div class="card-header border-0 pb-0 pt-3"><h6 class="text-white">All Restaurants (@ViewBag.Restaurants?.Count)</h6></div>
+            <div class="card-body px-3 py-2" style="max-height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush">
+                    @foreach(var item in ViewBag.Restaurants ?? new List<FarmToTable.Models.Restaurant>()) { <li class="list-group-item bg-transparent text-muted px-0 py-1">@item.RestaurantName</li> }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0" style="background-color: var(--agri-surface);">
+            <div class="card-header border-0 pb-0 pt-3"><h6 class="text-white">All Harvest Batches (@ViewBag.HarvestBatches?.Count)</h6></div>
+            <div class="card-body px-3 py-2" style="max-height: 200px; overflow-y: auto;">
+                <ul class="list-group list-group-flush">
+                    @foreach(var item in ViewBag.HarvestBatches ?? new List<FarmToTable.Models.HarvestBatch>()) { <li class="list-group-item bg-transparent text-muted px-0 py-1">Batch #@item.BatchID - Qty: @item.Quantity</li> }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="text-white mb-3 mt-4">5. Complex JOIN Queries</h4>
+<div class="card border-0 mb-4" style="background-color: var(--agri-surface);">
+    <div class="card-header border-0 pb-0 pt-4 px-4"><h5 class="text-white">Restaurant Orders with Batch Details</h5></div>
+    <div class="card-body px-4">
+        <div class="table-responsive" style="max-height: 250px;">
+            <table class="table table-borderless table-hover">
+                <thead class="sticky-top" style="background-color: var(--agri-surface-hover);">
+                    <tr><th>Restaurant</th><th>OrderID</th><th>Date</th><th>BatchID</th><th>Qty</th><th>Unit Price</th></tr>
+                </thead>
+                <tbody>
+                    @foreach(var row in ViewBag.Join1 ?? new List<Dictionary<string,object>>()) {
+                        <tr style="border-bottom: 1px solid var(--agri-border);"><td>@row["RestaurantName"]</td><td>@row["OrderID"]</td><td>@(((DateTime)row["OrderDate"]).ToShortDateString())</td><td>@row["BatchID"]</td><td>@row["Quantity"]</td><td>@row["UnitPrice"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 mb-4" style="background-color: var(--agri-surface);">
+    <div class="card-header border-0 pb-0 pt-4 px-4"><h5 class="text-white">Crop Names with Harvest Batches</h5></div>
+    <div class="card-body px-4">
+        <div class="table-responsive" style="max-height: 250px;">
+            <table class="table table-borderless table-hover">
+                <thead class="sticky-top" style="background-color: var(--agri-surface-hover);">
+                    <tr><th>Crop</th><th>BatchID</th><th>Harvest Date</th><th>Quantity</th></tr>
+                </thead>
+                <tbody>
+                    @foreach(var row in ViewBag.Join2 ?? new List<Dictionary<string,object>>()) {
+                        <tr style="border-bottom: 1px solid var(--agri-border);"><td>@row["CropName"]</td><td>@row["BatchID"]</td><td>@(((DateTime)row["HarvestDate"]).ToShortDateString())</td><td>@row["Quantity"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 h-100" style="background-color: var(--agri-surface);">
+            <div class="card-header border-0 pb-0 pt-4 px-4"><h5 class="text-white">Farm Batches with Crop Info</h5></div>
+            <div class="card-body px-4">
+                <div class="table-responsive" style="max-height: 250px;">
+                    <table class="table table-borderless table-hover">
+                        <thead class="sticky-top" style="background-color: var(--agri-surface-hover);"><tr><th>Farm</th><th>BatchID</th><th>Crop</th><th>Quantity</th></tr></thead>
+                        <tbody>
+                            @foreach(var row in ViewBag.Join3 ?? new List<Dictionary<string,object>>()) {
+                                <tr style="border-bottom: 1px solid var(--agri-border);"><td>@row["FarmName"]</td><td>@row["BatchID"]</td><td>@row["CropName"]</td><td>@row["Quantity"]</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 h-100" style="background-color: var(--agri-surface);">
+            <div class="card-header border-0 pb-0 pt-4 px-4"><h5 class="text-white">Orders with Restaurant Names</h5></div>
+            <div class="card-body px-4">
+                <div class="table-responsive" style="max-height: 250px;">
+                    <table class="table table-borderless table-hover">
+                        <thead class="sticky-top" style="background-color: var(--agri-surface-hover);"><tr><th>OrderID</th><th>Date</th><th>Restaurant</th></tr></thead>
+                        <tbody>
+                            @foreach(var row in ViewBag.Join4 ?? new List<Dictionary<string,object>>()) {
+                                <tr style="border-bottom: 1px solid var(--agri-border);"><td>@row["OrderID"]</td><td>@(((DateTime)row["OrderDate"]).ToShortDateString())</td><td>@row["RestaurantName"]</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

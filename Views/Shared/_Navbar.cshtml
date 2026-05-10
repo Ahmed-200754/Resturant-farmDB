@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand me-5" asp-area="" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-leaf-fill me-1"></i> AgriIntel
+            <span>CONTROL CENTER</span>
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-none d-md-flex" id="topNavbar">
+            <form class="d-flex position-relative me-4" style="width: 350px;">
+                <i class="bi bi-search position-absolute text-muted" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
+                <input class="form-control rounded-pill border-0 ps-5" type="search" placeholder="Search markets, crops, or logistics..." aria-label="Search" style="background-color: var(--agri-surface); color: white;">
+            </form>
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-medium" href="#">Network</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success border-bottom border-success border-2 pb-1 fw-bold" href="#">Fleet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white fw-medium" href="#">Forecasts</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item">
+                    <a class="nav-link text-white position-relative" href="#">
+                        <i class="bi bi-bell fs-5"></i>
+                        <span class="position-absolute top-25 start-75 translate-middle p-1 bg-danger border border-dark rounded-circle" style="margin-top: 5px;">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">
+                        <i class="bi bi-grid-3x3-gap fs-5"></i>
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <button class="btn btn-primary btn-sm rounded-pill px-4 fw-bold">Deploy</button>
+                </li>
+                <li class="nav-item ms-2">
+                    <div class="rounded-circle bg-secondary overflow-hidden" style="width: 35px; height: 35px;">
+                        <img src="https://ui-avatars.com/api/?name=Operative&background=1d4231&color=9bd9b5" alt="User" class="w-100 h-100 object-fit-cover">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

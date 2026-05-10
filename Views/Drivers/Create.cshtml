@@ -1,0 +1,43 @@
+@model Driver
+@{
+    ViewData["Title"] = "Create Driver";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Add New Driver</h1>
+</div>
+
+<div class="card shadow-sm border-0 w-50">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="mb-3">
+                <label asp-for="DriverName" class="form-label fw-bold"></label>
+                <input asp-for="DriverName" class="form-control" />
+                <span asp-validation-for="DriverName" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="DriverPhone" class="form-label fw-bold"></label>
+                <input asp-for="DriverPhone" class="form-control" />
+                <span asp-validation-for="DriverPhone" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="DriverDOB" class="form-label fw-bold"></label>
+                <input asp-for="DriverDOB" class="form-control" type="date" />
+                <span asp-validation-for="DriverDOB" class="text-danger"></span>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Driver</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

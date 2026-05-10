@@ -1,0 +1,43 @@
+@model Restaurant
+@{
+    ViewData["Title"] = "Create Restaurant";
+}
+
+<div class="pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Add New Restaurant</h1>
+</div>
+
+<div class="card shadow-sm border-0 w-50">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="mb-3">
+                <label asp-for="RestaurantName" class="form-label fw-bold"></label>
+                <input asp-for="RestaurantName" class="form-control" />
+                <span asp-validation-for="RestaurantName" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="Address" class="form-label fw-bold"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="DeliveryWindow" class="form-label fw-bold"></label>
+                <input asp-for="DeliveryWindow" class="form-control" type="time" />
+                <span asp-validation-for="DeliveryWindow" class="text-danger"></span>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Restaurant</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

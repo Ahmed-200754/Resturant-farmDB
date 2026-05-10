@@ -1,0 +1,68 @@
+@model IEnumerable<Restaurant>
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Restaurants</h1>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i> Add New Restaurant</a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Restaurant Name</th>
+                        <th>Address</th>
+                        <th>Delivery Window</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model ?? new List<Restaurant>())
+                    {
+                        <tr>
+                            <td>@item.RestaurantID</td>
+                            <td class="fw-bold">@item.RestaurantName</td>
+                            <td>@item.Address</td>
+                            <td><span class="badge bg-info text-dark"><i class="bi bi-clock me-1"></i> @item.DeliveryWindow.ToString(@"hh\:mm")</span></td>
+                            <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@item.RestaurantID" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                                <button type="button" class="btn btn-sm btn-outline-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.RestaurantID">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade text-start" id="deleteModal-@item.RestaurantID" tabindex="-1" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete <strong>@item.RestaurantName</strong>?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form asp-action="Delete" asp-route-id="@item.RestaurantID" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if(!Model.Any()) {
+                        <tr><td colspan="5" class="text-center">No restaurants found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

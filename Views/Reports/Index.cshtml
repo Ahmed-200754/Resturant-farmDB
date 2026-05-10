@@ -1,0 +1,211 @@
+@model ReportViewModel
+@{
+    ViewData["Title"] = "Analytics & Reports";
+}
+
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
+    <h1 class="h2">Analytics & Reports</h1>
+</div>
+
+<div class="card shadow-sm border-0 mb-4 bg-light">
+    <div class="card-body">
+        <form method="get" asp-action="Index" class="row gx-3 gy-2 align-items-center">
+            <div class="col-auto">
+                <label class="form-label mb-0 fw-bold">Select Month:</label>
+            </div>
+            <div class="col-auto">
+                <select name="month" class="form-select">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        var m = new DateTime(2000, i, 1).ToString("MMMM");
+                        if (i == Model.SelectedMonth)
+                        {
+                            <option value="@i" selected>@m</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@m</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <select name="year" class="form-select">
+                    @for (int i = DateTime.Today.Year - 5; i <= DateTime.Today.Year; i++)
+                    {
+                        if (i == Model.SelectedYear)
+                        {
+                            <option value="@i" selected>@i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Generate Reports</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Report 1: Most Ordered Crop -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <h5 class="card-title text-success"><i class="bi bi-trophy-fill text-warning me-2"></i> Most Ordered Crop (All Time)</h5>
+            </div>
+            <div class="card-body text-center d-flex flex-column justify-content-center">
+                @if (Model.Report1 != null)
+                {
+                    <h2 class="display-5 text-dark mb-1">@Model.Report1.CropName</h2>
+                    <p class="text-muted fs-5">Ordered <strong>@Model.Report1.TotalOrders</strong> times</p>
+                }
+                else
+                {
+                    <p class="text-muted">No data available.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 3: Top Driver -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <h5 class="card-title text-success"><i class="bi bi-star-fill text-warning me-2"></i> Top Driver for Selected Month</h5>
+            </div>
+            <div class="card-body text-center d-flex flex-column justify-content-center">
+                @if (Model.Report3 != null)
+                {
+                    <h2 class="display-5 text-dark mb-1">@Model.Report3.DriverName</h2>
+                    <p class="text-muted fs-5">Completed <strong>@Model.Report3.TripCount</strong> trips</p>
+                }
+                else
+                {
+                    <p class="text-muted">No trips recorded for this month.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report 6: Total Revenue Per Farm -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white border-0 pt-4">
+        <h5 class="card-title text-success"><i class="bi bi-cash-stack me-2"></i> Total Revenue Per Farm (All Time)</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Farm Name</th>
+                        <th class="text-end">Total Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model?.Report6 ?? new List<FarmRevenue>())
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.FarmName</td>
+                            <td class="text-end text-success fw-bold">$@item.TotalRevenue.ToString("N2")</td>
+                        </tr>
+                    }
+                    @if(!Model.Report6.Any()) {
+                        <tr><td colspan="2" class="text-center">No revenue data found.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Report 2: Inactive Farms -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <h5 class="card-title text-success"><i class="bi bi-house-dash me-2"></i> Inactive Farms for Selected Month</h5>
+                <p class="small text-muted mb-0">Farms with no harvests and no orders.</p>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @foreach(var farm in Model?.Report2 ?? new List<Farm>())
+                    {
+                        <li class="list-group-item px-0">@farm.FarmName</li>
+                    }
+                    @if(!Model.Report2.Any()) {
+                        <li class="list-group-item px-0 text-muted">No inactive farms found.</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 4: Restaurants with No Orders -->
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <h5 class="card-title text-success"><i class="bi bi-shop-window me-2"></i> Restaurants with No Orders</h5>
+                <p class="small text-muted mb-0">For the selected month.</p>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    @foreach(var rest in Model?.Report4 ?? new List<Restaurant>())
+                    {
+                        <li class="list-group-item px-0">@rest.RestaurantName <br><small class="text-muted">@rest.Address</small></li>
+                    }
+                    @if(!Model.Report4.Any()) {
+                        <li class="list-group-item px-0 text-muted">All restaurants placed orders this month.</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report 5: Batches Delivered -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white border-0 pt-4">
+        <h5 class="card-title text-success"><i class="bi bi-box-seam me-2"></i> Batches Delivered to Restaurants</h5>
+        <p class="small text-muted mb-0">For the selected month.</p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Restaurant</th>
+                        <th>Batch ID</th>
+                        <th>Crop</th>
+                        <th>Farm</th>
+                        <th>Harvest Date</th>
+                        <th>Ordered Qty</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model?.Report5 ?? new List<RestaurantBatchReport>())
+                    {
+                        <tr>
+                            <td class="fw-bold">@item.RestaurantName</td>
+                            <td>#@item.BatchID</td>
+                            <td>@item.CropName</td>
+                            <td>@item.FarmName</td>
+                            <td>@item.HarvestDate.ToShortDateString()</td>
+                            <td>@item.OrderedQuantity</td>
+                            <td class="text-success fw-bold">$@((item.OrderedQuantity * item.UnitPrice).ToString("N2"))</td>
+                        </tr>
+                    }
+                    @if(!Model.Report5.Any()) {
+                        <tr><td colspan="7" class="text-center">No deliveries found for this month.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
