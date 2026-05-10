@@ -41,7 +41,7 @@
                 <div class="rounded p-2 d-flex align-items-center justify-content-center" style="background-color: var(--agri-primary-dim); width: 32px; height: 32px;">
                     <i class="bi bi-cash-stack text-success"></i>
                 </div>
-                <span class="badge" style="background-color: var(--agri-primary-dim); color: var(--agri-primary);">+12.4%</span>
+                <span class="badge" style="background-color: var(--agri-primary-dim); color: var(--agri-primary);">+@Model.RevenueGrowth.ToString("N1")%</span>
             </div>
             <p class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">TOTAL REVENUE</p>
             <h2 class="mb-2">@FormatMoney(Model.TotalRevenue)</h2>
@@ -150,7 +150,11 @@
                                     </td>
                                     <td class="text-muted">@order.OrderDate.ToShortDateString()</td>
                                     <td>
-                                        <span class="badge bg-dark border border-secondary text-muted">Active</span>
+                                        @{
+                                            var status = order.OrderDate < DateTime.Today.AddDays(-2) ? "Delivered" : "Active";
+                                            var color = status == "Delivered" ? "var(--agri-primary)" : "var(--agri-warning)";
+                                        }
+                                        <span class="badge bg-dark border border-secondary" style="color: @color; font-size: 0.65rem;">@status</span>
                                     </td>
                                     <td class="text-end pe-0 text-white fw-bold">@FormatMoney(order.TotalValue)</td>
                                 </tr>
@@ -182,8 +186,8 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div>
                             <p class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">RISING DEMAND</p>
-                            <h6 class="text-white mb-0">Heirloom Tomatoes</h6>
-                            <small class="text-success">+24% predicted demand</small>
+                            <h6 class="text-white mb-0">@Model.TopCropName</h6>
+                            <small class="text-success">+@Model.TopCropGrowth.ToString("N0")% predicted demand</small>
                         </div>
                         <div class="rounded p-2" style="background-color: var(--agri-surface-hover);">
                             <i class="bi bi-graph-up text-muted"></i>

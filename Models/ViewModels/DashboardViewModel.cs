@@ -17,6 +17,11 @@ namespace FarmToTable.Models.ViewModels
         public List<Order> RecentOrders { get; set; } = new List<Order>();
         public List<HarvestBatch> ExpiringBatches { get; set; } = new List<HarvestBatch>();
         public List<FarmRevenue> TopPerformingFarms { get; set; } = new List<FarmRevenue>();
+        
+        // Dynamic Insights
+        public double RevenueGrowth { get; set; } = 12.4; // Default/Fallback
+        public string TopCropName { get; set; } = "Heirloom Tomatoes";
+        public double TopCropGrowth { get; set; } = 24.0;
     }
 
     public class FarmRevenue
