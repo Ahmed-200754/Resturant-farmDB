@@ -115,7 +115,7 @@
                             <td class="text-end text-success fw-bold">$@item.TotalRevenue.ToString("N2")</td>
                         </tr>
                     }
-                    @if(!Model.Report6.Any()) {
+                    @if(Model?.Report6 == null || !Model.Report6.Any()) {
                         <tr><td colspan="2" class="text-center">No revenue data found.</td></tr>
                     }
                 </tbody>
@@ -138,7 +138,7 @@
                     {
                         <li class="list-group-item px-0">@farm.FarmName</li>
                     }
-                    @if(!Model.Report2.Any()) {
+                    @if(Model?.Report2 == null || !Model.Report2.Any()) {
                         <li class="list-group-item px-0 text-muted">No inactive farms found.</li>
                     }
                 </ul>
@@ -159,7 +159,7 @@
                     {
                         <li class="list-group-item px-0">@rest.RestaurantName <br><small class="text-muted">@rest.Address</small></li>
                     }
-                    @if(!Model.Report4.Any()) {
+                    @if(Model?.Report4 == null || !Model.Report4.Any()) {
                         <li class="list-group-item px-0 text-muted">All restaurants placed orders this month.</li>
                     }
                 </ul>
@@ -201,7 +201,7 @@
                             <td class="text-success fw-bold">$@((item.OrderedQuantity * item.UnitPrice).ToString("N2"))</td>
                         </tr>
                     }
-                    @if(!Model.Report5.Any()) {
+                    @if(Model?.Report5 == null || !Model.Report5.Any()) {
                         <tr><td colspan="7" class="text-center">No deliveries found for this month.</td></tr>
                     }
                 </tbody>

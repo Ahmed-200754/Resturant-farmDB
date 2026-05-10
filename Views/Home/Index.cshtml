@@ -100,10 +100,11 @@
                 <span class="badge" style="background-color: var(--agri-primary-dim); color: var(--agri-primary);">Rank #1</span>
             </div>
             <p class="text-uppercase text-muted fw-bold mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">TOP FARM</p>
-            @if((Model.TopPerformingFarms ?? new List<FarmRevenue>()).Any()) {
-                <h3 class="mb-2 fs-4 text-truncate">@Model.TopPerformingFarms.First().FarmName</h3>
+            @if(Model.TopPerformingFarms != null && Model.TopPerformingFarms.Any()) {
+                var topFarm = Model.TopPerformingFarms.First();
+                <h3 class="mb-2 fs-4 text-truncate">@topFarm.FarmName</h3>
                 <p class="text-success mb-0 mt-auto" style="font-size: 0.75rem;">
-                    @FormatMoney(Model.TopPerformingFarms.First().TotalRevenue) generated
+                    @FormatMoney(topFarm.TotalRevenue) generated
                 </p>
             } else {
                 <h3 class="mb-2 fs-4 text-muted">No Data</h3>

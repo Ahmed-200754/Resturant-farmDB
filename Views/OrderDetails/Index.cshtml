@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Order Details";
     int orderId = ViewBag.OrderID;
-    double orderTotal = Model.Sum(x => x.LineTotal);
+    double orderTotal = (Model ?? new List<OrderDetail>()).Sum(x => x.LineTotal);
 }
 
 <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-4 border-bottom">
@@ -49,7 +49,7 @@
                                     </td>
                                 </tr>
                             }
-                            @if(!Model.Any()) {
+                            @if(Model == null || !Model.Any()) {
                                 <tr><td colspan="6" class="text-center">No items added to this order yet.</td></tr>
                             }
                         </tbody>

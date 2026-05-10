@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                     }
-                    @if(!Model.Any()) {
+                    @if(Model == null || !Model.Any()) {
                         <tr><td colspan="4" class="text-center">No crops found.</td></tr>
                     }
                 </tbody>

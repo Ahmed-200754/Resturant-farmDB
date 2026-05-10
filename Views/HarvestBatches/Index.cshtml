@@ -92,7 +92,7 @@
                             </td>
                         </tr>
                     }
-                    @if(!Model.Any()) {
+                    @if(Model == null || !Model.Any()) {
                         <tr><td colspan="7" class="text-center">No batches found.</td></tr>
                     }
                 </tbody>
