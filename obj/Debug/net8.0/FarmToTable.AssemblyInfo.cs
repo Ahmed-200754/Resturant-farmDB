@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FarmToTable")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afdae2034ce3309f2fdaebc0108b3801a5e70e65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66bde0f5069587e879acde1f50a82dca5619012c")]
 [assembly: System.Reflection.AssemblyProductAttribute("FarmToTable")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FarmToTable")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
