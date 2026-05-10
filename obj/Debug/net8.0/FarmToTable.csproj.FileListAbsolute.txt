@@ -73,3 +73,4 @@ E:\gym folder\FarmToTable\obj\Debug\net8.0\refint\FarmToTable.dll
 E:\gym folder\FarmToTable\obj\Debug\net8.0\FarmToTable.pdb
 E:\gym folder\FarmToTable\obj\Debug\net8.0\FarmToTable.genruntimeconfig.cache
 E:\gym folder\FarmToTable\obj\Debug\net8.0\ref\FarmToTable.dll
+E:\gym folder\FarmToTable\obj\Debug\net8.0\FarmToTable.sourcelink.json
